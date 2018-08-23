@@ -9,7 +9,6 @@ namespace ATMProject
     class SavingsAccount : Account
     {
         public SavingsAccount(int accountNumber, string accountType, string accountName, double currentBalance, int customerId):base(accountNumber,accountType,accountName,currentBalance,customerId)
-
         {
 
         }

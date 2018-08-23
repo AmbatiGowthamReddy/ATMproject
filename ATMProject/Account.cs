@@ -27,10 +27,8 @@ namespace ATMProject
         {
             return 0;
         }
-
         public abstract void Depositfunds(int amount);
         public abstract int Withdrawfunds(int amount);
-
         public double Transfer(int targetAccountNumber)
         {
             return 0;

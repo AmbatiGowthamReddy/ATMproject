@@ -13,15 +13,12 @@ namespace ATMConsole
     {
         static void Main(string[] args)
         {
-           
-            ATMProject.Card c = new ATMProject.Card(7);
-            bool validCard = c.IsValid();
-            string ScreenMessage;
-            bool validatePin = c.PinValidate(222,out ScreenMessage);
-            Console.WriteLine(ScreenMessage);
-            string Pinchange = c.ChangePin(2222,1431);
-            Console.WriteLine(validCard);
-            Console.WriteLine(validatePin);
+
+            ATMProject.Customer c = new ATMProject.Customer();
+            string CustomerDetails = c.ShowCustomerDetails(13);
+            Console.WriteLine(CustomerDetails);
+            
+
 
         }
     }

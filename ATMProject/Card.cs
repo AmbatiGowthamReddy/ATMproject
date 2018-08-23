@@ -1,5 +1,7 @@
 ﻿using ATMDataAccess;
+using System;
 using System.Configuration;
+using System.Linq;
 
 
 namespace ATMProject
@@ -11,34 +13,41 @@ namespace ATMProject
         private int _cardNumber { get; set; }
         private int _cardPin { get; set; }
         private string _cardStatus { get; set; }
-        private bool _status { get; set; }
-        private bool IsBlock = false;
-        
+        private string _status { get; set; }
+
+        private ATMDataModel dataModel;
+
         public Card(int cardNumber)
         {
-            string connString = ConfigurationManager.ConnectionStrings["ATMConnectionString"].ToString();
-            using (var db = new ATMDataModel())
-            {
-                foreach (var card in db.Cards)
-                {
-                    if (card.CardNumber == cardNumber)
-                    {
-                        this._status = true;
-                        _customerId = card.CustomerId;
-                        _cardNumber = cardNumber;
-                        _cardStatus = card.CardStatus; ;
-                        _cardPin = card.CardPin;
-                        break;
-                    }
-
-                }
-            }
-
+            PouplateData(cardNumber);
         }
-        public bool IsValid()
+
+        private void PouplateData(int cardNumber) {
+            string connString = ConfigurationManager.ConnectionStrings["ATMConnectionString"].ToString();
+            dataModel = new ATMDataModel();
+            var card = dataModel.Cards.SingleOrDefault(p => p.CardNumber == cardNumber);
+            try
+            {
+                if (card != null)
+                {
+                    this._status = "True";
+                    _customerId = card.CustomerId;
+                    _cardNumber = cardNumber;
+                    _cardStatus = card.CardStatus;
+                    _cardPin = card.CardPin;
+                }
+
+            }
+            catch (Exception e)
+            {
+                this._status = e.ToString();
+                throw e;
+            }
+        }
+        public bool IsCardValid()
         {
 
-            if (this._status == true &&
+            if (this._status == "True" &&
                     "Active".Equals(this._cardStatus, System.StringComparison.OrdinalIgnoreCase))
             {
                 return true;
@@ -49,7 +58,7 @@ namespace ATMProject
         public bool PinValidate(int PinNumber, out string ErrorMassage)
         {
             ErrorMassage = "";
-            if (IsValid().Equals(true))
+            if (IsCardValid().Equals(true))
             {
 
                 var retryCount = 0;
@@ -65,7 +74,7 @@ namespace ATMProject
 
                         if (retryCount == 0)
                         {
-                            IsBlock = true;
+                            BlockCard(_cardNumber);
                             ErrorMassage = ErrorMassage + "You have exceeded Max Number of trails. Your Card is blocked. Please contact the branch.";
                         }
                         else
@@ -82,20 +91,25 @@ namespace ATMProject
 
             return false;
         }
-        public string  BlockCard()
+        public string BlockCard(int cardNumber)
         {
-            if (IsBlock == true)
+            var card = dataModel.Cards.SingleOrDefault(p => p.CardNumber == cardNumber);
+            if (card != null)
             {
-                this._cardStatus = "Blocked";
-                return "Card Blocked";
+                card.CardStatus = "Blocked";
+                dataModel.SaveChanges();
+                return "Card Blocked as per your request";
             }
             return "Card NOT Blocked";
         }
-        public string ChangePin(int OldPin, int NewPin) {
-
-            if (IsValid()==true && this._cardPin==OldPin)
+        public string ChangePin(int OldPin, int NewPin)
+        {
+            var card = dataModel.Cards.SingleOrDefault(p => p.CardNumber == this._cardNumber);
+            if (IsCardValid() && this._cardPin == OldPin)
             {
                 this._cardPin = NewPin;
+                card.CardPin = NewPin;
+                dataModel.SaveChanges();
                 return "Card Pin Changed";
             }
             return "Card Pin is not Changed. Try again or Contact Customer Care Team";
