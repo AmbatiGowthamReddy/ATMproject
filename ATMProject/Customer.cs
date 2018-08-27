@@ -16,16 +16,17 @@ namespace ATMProject
 
         private ATMDataModel dataModel;
 
-        public string ShowCustomerDetails(int cardNumber) {
-            Card c = new Card(cardNumber);
+        public string ShowCustomerDetails(int cardNumber)
+        {
+           
             string connString = ConfigurationManager.ConnectionStrings["ATMConnectionString"].ToString();
             dataModel = new ATMDataModel();
-            var cardData = dataModel.Cards.SingleOrDefault(p=>p.CardNumber==cardNumber);
-            if (cardData!= null)
+            var cardData = dataModel.Cards.SingleOrDefault(p => p.CardNumber == cardNumber);
+            if (cardData != null)
             {
                 this.customerId = cardData.CustomerId;
                 var custData = dataModel.Customers.SingleOrDefault(p => p.CustomerId == customerId);
-                if (custData!=null)
+                if (custData != null)
                 {
                     this.customerName = custData.CustomerName;
                     this.customerAddress = custData.CustomerAddress;
@@ -35,7 +36,7 @@ namespace ATMProject
                 return "Customer is not avaible with give CardNumber";
             }
             return "Enter Correct Customer ID";
-           
+
         }
     }
 }

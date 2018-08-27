@@ -13,11 +13,10 @@ namespace ATMConsole
     {
         static void Main(string[] args)
         {
-
-            ATMProject.Customer c = new ATMProject.Customer();
-            string CustomerDetails = c.ShowCustomerDetails(13);
-            Console.WriteLine(CustomerDetails);
-            
+            ATMProject.Account Ac = new ATMProject.SavingsAccount(12);
+            string Message = Ac.Checkbalance();
+            Console.WriteLine(Message);
+            Console.Read();
 
 
         }

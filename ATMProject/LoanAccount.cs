@@ -6,20 +6,40 @@ using System.Threading.Tasks;
 
 namespace ATMProject
 {
-    class LoanAccount : Account
+    public class LoanAccount : Account
     {
-        public LoanAccount(int accountNumber, string accountType, string accountName, double currentBalance, int customerId):base(accountNumber,accountType,accountName,currentBalance,customerId)
+        public LoanAccount(int cardNumber):base(cardNumber)
         {
 
         }
-        public override void Depositfunds(int amount)
+
+        public override string Depositfunds(int amount)
         {
-            throw new NotImplementedException();
+            if (accountType=="Loan")
+            {
+                Account A = new SavingsAccount(customerId);
+                return A.Depositfunds(amount);
+            }
+            else
+            {
+                return "You don't have Loan Account";
+            }
         }
 
-        public override int Withdrawfunds(int amount)
+        public override string Withdrawfunds(int amount)
         {
-            throw new NotImplementedException();
+            
+            if (accountType == "Loan")
+            {
+                Account A = new SavingsAccount(customerId);
+                return A.Withdrawfunds(amount);
+
+            }
+            else
+            {
+                return "You don't have Loan Account";
+            }
         }
+       
     }
 }

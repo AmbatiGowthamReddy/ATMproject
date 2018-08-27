@@ -16,6 +16,7 @@ namespace ATMDataAccess
         public ATMDataModel()
             : base("name=ATMConnectionString")
         {
+            
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 
@@ -34,6 +35,7 @@ namespace ATMDataAccess
         public string AccountType { get; set; }
         public string AccountName { get; set; }
         public double Balance { get; set; }
+        public int CustomerId { get; set; }
     }
 
     public class Card

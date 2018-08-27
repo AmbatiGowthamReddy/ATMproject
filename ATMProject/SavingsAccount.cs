@@ -6,20 +6,52 @@ using System.Threading.Tasks;
 
 namespace ATMProject
 {
-    class SavingsAccount : Account
+    public class SavingsAccount : Account
     {
-        public SavingsAccount(int accountNumber, string accountType, string accountName, double currentBalance, int customerId):base(accountNumber,accountType,accountName,currentBalance,customerId)
+        public SavingsAccount(int cardNumber) : base(cardNumber)
         {
 
         }
-        public override void Depositfunds(int amount)
+
+        public override string Depositfunds(int depositAmount)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var accnbr = dataModel.Accounts.SingleOrDefault(p => p.AccountNumber == accountNumber);
+                if (depositAmount > 0)
+                {
+                    accnbr.Balance += depositAmount;
+                    dataModel.SaveChanges();
+                    return $"{depositAmount} is added to your balance";
+                }
+                return "Enter Correct amount to deposit";
+            }
+            catch (Exception e)
+            {
+                return "Card Number don't have Account associated.";
+                throw e;
+            }
         }
 
-        public override int Withdrawfunds(int amount)
+        public override string Withdrawfunds(int withdrawamount)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var accnbr = dataModel.Accounts.SingleOrDefault(p => p.AccountNumber == accountNumber);
+                if (withdrawamount > 0 && withdrawamount <= accnbr.Balance)
+                {
+                    accnbr.Balance -= withdrawamount;
+                    dataModel.SaveChanges();
+                    return $"{withdrawamount} is debited from your balance";
+                }
+                return "Enter Correct amount to withdraw";
+            }
+            catch (Exception e)
+            {
+
+                return "Card Number don't have Account associated.";
+                throw e;
+            }
         }
     }
 }

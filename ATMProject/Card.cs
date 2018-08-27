@@ -17,12 +17,12 @@ namespace ATMProject
 
         private ATMDataModel dataModel;
 
-        public Card(int cardNumber)
+        public Card(int cardNumber, out string message)
         {
-            PouplateData(cardNumber);
+            message = PouplateData(cardNumber);
         }
 
-        private void PouplateData(int cardNumber) {
+        private string PouplateData(int cardNumber) {
             string connString = ConfigurationManager.ConnectionStrings["ATMConnectionString"].ToString();
             dataModel = new ATMDataModel();
             var card = dataModel.Cards.SingleOrDefault(p => p.CardNumber == cardNumber);
@@ -37,6 +37,7 @@ namespace ATMProject
                     _cardPin = card.CardPin;
                 }
 
+                return "Card Is Not Valid";
             }
             catch (Exception e)
             {
