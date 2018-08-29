@@ -13,45 +13,51 @@ namespace ATMProject
 
         }
 
-        public override string Depositfunds(int depositAmount)
+        public override void Depositfunds(int depositAmount)
         {
             try
             {
-                var accnbr = dataModel.Accounts.SingleOrDefault(p => p.AccountNumber == accountNumber);
                 if (depositAmount > 0)
                 {
-                    accnbr.Balance += depositAmount;
+                    Ac.CurrentBalance += depositAmount;
                     dataModel.SaveChanges();
-                    return $"{depositAmount} is added to your balance";
                 }
-                return "Enter Correct amount to deposit";
             }
             catch (Exception e)
             {
-                return "Card Number don't have Account associated.";
                 throw e;
             }
         }
 
-        public override string Withdrawfunds(int withdrawamount)
+        public override void Withdrawfunds(int withdrawamount)
         {
             try
             {
-                var accnbr = dataModel.Accounts.SingleOrDefault(p => p.AccountNumber == accountNumber);
-                if (withdrawamount > 0 && withdrawamount <= accnbr.Balance)
+
+                if (withdrawamount > 0 && withdrawamount <= Ac.CurrentBalance)
                 {
-                    accnbr.Balance -= withdrawamount;
+                    Ac.CurrentBalance -= withdrawamount;
                     dataModel.SaveChanges();
-                    return $"{withdrawamount} is debited from your balance";
                 }
-                return "Enter Correct amount to withdraw";
             }
             catch (Exception e)
             {
-
-                return "Card Number don't have Account associated.";
                 throw e;
             }
+        }
+
+        public override void TransferFunds(int targetAccountNumber, int TAmount)
+        {
+            try
+            {
+                if (TAmount > 0 && TAmount <= Ac.CurrentBalance)
+                {
+                    Ac.CurrentBalance -= TAmount;
+                    dataModel.SaveChanges();
+                }
+
+            }
+            catch (Exception e) { throw e; }
         }
     }
 }

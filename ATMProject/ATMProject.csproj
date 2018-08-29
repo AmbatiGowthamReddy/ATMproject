@@ -50,6 +50,8 @@
     <Compile Include="Card.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="LoanAccount.cs" />
+    <Compile Include="Models\AccountInfo.cs" />
+    <Compile Include="Models\CustomerInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SavingsAccount.cs" />
   </ItemGroup>

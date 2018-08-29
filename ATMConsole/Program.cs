@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ATMDataAccess;
 using System.Configuration;
 using ATMProject;
+using ATMProject.Models;
 
 namespace ATMConsole
 {
@@ -13,9 +14,12 @@ namespace ATMConsole
     {
         static void Main(string[] args)
         {
-            ATMProject.Account Ac = new ATMProject.SavingsAccount(12);
-            string Message = Ac.Checkbalance();
-            Console.WriteLine(Message);
+
+            ATMProject.Customer Ac = new ATMProject.Customer();
+            CustomerInfo Message = Ac.GetCustomerDetails(25);
+
+            Console.WriteLine("Customer Info: {0}{1}{2}", Message.CustomerId.ToString(), Message.CustomerName, Message.CustomerAddress);
+
             Console.Read();
 
 

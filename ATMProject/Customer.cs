@@ -1,4 +1,5 @@
 ﻿using ATMDataAccess;
+using ATMProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,32 +11,32 @@ namespace ATMProject
 {
     public class Customer
     {
-        private int customerId { get; set; }
-        private string customerName { get; set; }
-        private string customerAddress { get; set; }
-
+        CustomerInfo c;
         private ATMDataModel dataModel;
 
-        public string ShowCustomerDetails(int cardNumber)
+        public CustomerInfo GetCustomerDetails(int cardNumber)
         {
-           
-            string connString = ConfigurationManager.ConnectionStrings["ATMConnectionString"].ToString();
-            dataModel = new ATMDataModel();
-            var cardData = dataModel.Cards.SingleOrDefault(p => p.CardNumber == cardNumber);
-            if (cardData != null)
+            try
             {
-                this.customerId = cardData.CustomerId;
-                var custData = dataModel.Customers.SingleOrDefault(p => p.CustomerId == customerId);
-                if (custData != null)
+                dataModel = new ATMDataModel();
+                var cardData = dataModel.Cards.SingleOrDefault(p => p.CardNumber == cardNumber);
+                if (cardData != null)
                 {
-                    this.customerName = custData.CustomerName;
-                    this.customerAddress = custData.CustomerAddress;
-                    var CustomerDetails = $"CustomerId={customerId}, CustomerName= {customerName}, CustomerAddress= {customerAddress}";
-                    return CustomerDetails;
+                    c = new CustomerInfo();
+                    c.CustomerId = cardData.CustomerId;
+                    var custData = dataModel.Customers.SingleOrDefault(p => p.CustomerId == c.CustomerId);
+                    if (custData != null)
+                    {
+                        c.CustomerName = custData.CustomerName;
+                        c.CustomerAddress = custData.CustomerAddress;
+                    }
                 }
-                return "Customer is not avaible with give CardNumber";
+                return c;
             }
-            return "Enter Correct Customer ID";
+            catch (Exception E)
+            {
+                throw E;
+            }
 
         }
     }

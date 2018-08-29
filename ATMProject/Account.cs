@@ -5,82 +5,58 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using ATMDataAccess;
-
+using ATMProject.Models;
 
 namespace ATMProject
 {
     public abstract class Account
     {
-        public int accountNumber;
-        public string accountType;
-        public string accountName;
-        public double currentBalance;
-        public int customerId;
-        public ATMDataModel dataModel;
-
+        protected AccountInfo Ac;
+        protected ATMDataModel dataModel;
 
         public Account(int cardNumber)
         {
+            dataModel = new ATMDataModel();
             PopulateAccountData(cardNumber);
         }
-
-
-        public string PopulateAccountData(int cardNumber)
+        private void PopulateAccountData(int cardNumber)
         {
 
-            string connString = ConfigurationManager.ConnectionStrings["ATMConnectionString"].ToString();
-            dataModel = new ATMDataModel();
-            var cardData = dataModel.Cards.SingleOrDefault(p => p.CardNumber == cardNumber);
             try
             {
+                Ac = new AccountInfo();
+                var cardData = dataModel.Cards.SingleOrDefault(p => p.CardNumber == cardNumber);
                 if (cardData != null)
                 {
-                    this.customerId = cardData.CustomerId;
-                    var accData = dataModel.Accounts.SingleOrDefault(p => p.CustomerId == customerId);
+                    Ac.CustomerId = cardData.CustomerId;
+                    var accData = dataModel.Accounts.SingleOrDefault(p => p.CustomerId == Ac.CustomerId);
                     if (accData != null)
                     {
-                        this.accountNumber = accData.AccountNumber;
-                        this.accountName = accData.AccountName;
-                        this.accountType = accData.AccountType;
-                        this.customerId = accData.CustomerId;
-                        this.currentBalance = accData.Balance;
-                    }
-                    else
-                    {
-                        return "Customer Id is invalid";
+                        Ac.AccountNumber = accData.AccountNumber;
+                        Ac.AccountName = accData.AccountName;
+                        Ac.AccountType = accData.AccountType;
+                        Ac.CustomerId = accData.CustomerId;
+                        Ac.CurrentBalance = accData.Balance;
                     }
                 }
-                else
-                {
-                    return "card Number is Invalid";
-                }
-                return "Populated data without any issues";
+                
             }
             catch (Exception e)
             {
                 throw e;
             }
         }
-
-        public string Checkbalance()
-        {
-            var accData = dataModel.Accounts.SingleOrDefault(p=>p.AccountNumber == this.accountNumber);
-            if (accData != null)
-            {
-                return accData.Balance.ToString();
-            }
-            return "Account Number is Invalid";
+        public AccountInfo GetAccountDetails() {
+            return Ac;
         }
-
-
-        public abstract string Depositfunds(int amount);
-
-
-        public abstract string Withdrawfunds(int amount);
-        public double TransferFunds(int targetAccountNumber)
+        public double Checkbalance()
         {
-            return 0;
+            return Ac.CurrentBalance;
         }
+        public abstract void Depositfunds(int amount);
+        public abstract void Withdrawfunds(int amount);
+        public abstract void TransferFunds(int targetAccountNumber, int amount);
+        
 
 
     }

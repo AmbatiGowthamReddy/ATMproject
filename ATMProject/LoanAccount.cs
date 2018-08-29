@@ -13,33 +13,20 @@ namespace ATMProject
 
         }
 
-        public override string Depositfunds(int amount)
+        public override void Depositfunds(int amount)
         {
-            if (accountType=="Loan")
-            {
-                Account A = new SavingsAccount(customerId);
-                return A.Depositfunds(amount);
-            }
-            else
-            {
-                return "You don't have Loan Account";
-            }
+            throw new NotImplementedException();
         }
 
-        public override string Withdrawfunds(int amount)
+        public override void TransferFunds(int targetAccountNumber, int TAmount)
         {
-            
-            if (accountType == "Loan")
-            {
-                Account A = new SavingsAccount(customerId);
-                return A.Withdrawfunds(amount);
-
-            }
-            else
-            {
-                return "You don't have Loan Account";
-            }
+            throw new NotImplementedException();
         }
-       
+    
+        public override void Withdrawfunds(int amount)
+        {
+
+            throw new NotImplementedException();
+        }
     }
 }
