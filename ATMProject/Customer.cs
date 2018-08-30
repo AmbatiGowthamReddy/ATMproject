@@ -13,7 +13,6 @@ namespace ATMProject
     {
         CustomerInfo c;
         private ATMDataModel dataModel;
-
         public CustomerInfo GetCustomerDetails(int cardNumber)
         {
             try

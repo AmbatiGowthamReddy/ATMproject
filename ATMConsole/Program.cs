@@ -14,14 +14,10 @@ namespace ATMConsole
     {
         static void Main(string[] args)
         {
-
             ATMProject.Customer Ac = new ATMProject.Customer();
             CustomerInfo Message = Ac.GetCustomerDetails(25);
-
             Console.WriteLine("Customer Info: {0}{1}{2}", Message.CustomerId.ToString(), Message.CustomerName, Message.CustomerAddress);
-
             Console.Read();
-
 
         }
     }

@@ -13,7 +13,6 @@ namespace ATMProject
     {
         protected AccountInfo Ac;
         protected ATMDataModel dataModel;
-
         public Account(int cardNumber)
         {
             dataModel = new ATMDataModel();
@@ -39,14 +38,15 @@ namespace ATMProject
                         Ac.CurrentBalance = accData.Balance;
                     }
                 }
-                
+
             }
             catch (Exception e)
             {
                 throw e;
             }
         }
-        public AccountInfo GetAccountDetails() {
+        public AccountInfo GetAccountDetails()
+        {
             return Ac;
         }
         public double Checkbalance()
@@ -56,8 +56,5 @@ namespace ATMProject
         public abstract void Depositfunds(int amount);
         public abstract void Withdrawfunds(int amount);
         public abstract void TransferFunds(int targetAccountNumber, int amount);
-        
-
-
     }
 }
