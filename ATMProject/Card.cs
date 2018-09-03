@@ -82,14 +82,18 @@ namespace ATMProject
         }
         public bool ChangePin(int OldPin, int NewPin)
         {
-            if (IsCardValid() && this._cardPin == OldPin)
+            if (OldPin!=NewPin)
             {
-                var card = dataModel.Cards.SingleOrDefault(p => p.CardNumber == this._cardNumber);
-                this._cardPin = NewPin;
-                card.CardPin = NewPin;
-                dataModel.SaveChanges();
-                return true;
+                if (IsCardValid() && this._cardPin == OldPin)
+                {
+                    var card = dataModel.Cards.SingleOrDefault(p => p.CardNumber == this._cardNumber);
+                    this._cardPin = NewPin;
+                    card.CardPin = NewPin;
+                    dataModel.SaveChanges();
+                    return true;
+                }
             }
+            
             return false;
         }
     }

@@ -7,7 +7,7 @@ namespace ATMProjectUnitTesting
     [TestClass]
     public class CardTest
     {
-        [TestMethod]
+        [TestCategory("CardValid Method"), TestMethod]
         public void ExistingCardNumber_CardValidationTest()
         {
 
@@ -15,7 +15,7 @@ namespace ATMProjectUnitTesting
             var ValidCard = c.IsCardValid();
             Assert.AreEqual(true, ValidCard);
         }
-        [TestMethod]
+        [TestCategory("CardValid Method"), TestMethod]
         public void NonExistingCardNumber_CardValidationTest()
         {
 
@@ -23,7 +23,7 @@ namespace ATMProjectUnitTesting
             var ValidCard = c.IsCardValid();
             Assert.AreEqual(false, ValidCard);
         }
-        [TestMethod]
+        [TestCategory("CardValid Method"), TestMethod]
         public void Active_ExistingCardNumber_CardValidationTest()
         {
 
@@ -31,8 +31,7 @@ namespace ATMProjectUnitTesting
             var ValidCard = c.IsCardValid();
             Assert.AreEqual(true, ValidCard);
         }
-
-        [TestMethod]
+        [TestCategory("CardValid Method"), TestMethod]
         public void NonActive_ExistingCardNumber_CardVadlidaiton()
         {
 
@@ -41,7 +40,7 @@ namespace ATMProjectUnitTesting
             Assert.AreEqual(false, ValidCard);
         }
 
-        [TestMethod]
+        [TestCategory("PinValid Method"), TestMethod]
         public void validCard_validPin_Pinvalidate()
         {
             Card c = new Card(1);
@@ -49,7 +48,7 @@ namespace ATMProjectUnitTesting
             Assert.AreEqual(true, validpin);
         }
 
-        [TestMethod]
+        [TestCategory("PinValid Method"), TestMethod]
         public void ValidCard_InvalidPin_Pinvalidate()
         {
             Card c = new Card(1);
@@ -57,7 +56,7 @@ namespace ATMProjectUnitTesting
             Assert.AreEqual(false, invalidpin);
         }
 
-        [TestMethod]
+        [TestCategory("PinValid Method"), TestMethod]
         public void InValidCard_InvalidPin_Pinvalidate()
         {
             Card c = new Card(101010101);
@@ -65,14 +64,14 @@ namespace ATMProjectUnitTesting
             Assert.AreEqual(false, invalidpin);
         }
 
-        [TestMethod]
+        [TestCategory("Block Method"), TestMethod]
         public void InValidCard_BlockCard()
         {
             Card c = new Card(101010101);
             var cardstatus = c.BlockCard();
             Assert.AreEqual(false, cardstatus);
         }
-        [TestMethod]
+        [TestCategory("Block Method"), TestMethod]
         public void ValidCard_BlockCard()
         {
             Card c = new Card(7);
@@ -80,15 +79,23 @@ namespace ATMProjectUnitTesting
             Assert.AreEqual(true, cardstatus);
         }
 
-        [TestMethod]
-        public void ChangePin_ValidCard_validOldPin()
+        [TestCategory("ChangePin Method"), TestMethod]
+        public void ChangePin_ValidCard_SameOldPinAsNewPin()
         {
             Card c = new Card(7);
-            var PinchangedStatus = c.ChangePin(2222,1234);
+            var PinchangedStatus = c.ChangePin(2222, 2222);
+            Assert.AreEqual(false, PinchangedStatus);
+        }
+
+        [TestCategory("ChangePin Method"), TestMethod]
+        public void ChangePin_ValidCard_validOldPin()
+        {
+            Card c = new Card(15);
+            var PinchangedStatus = c.ChangePin(0, 1515);
             Assert.AreEqual(true, PinchangedStatus);
         }
 
-        [TestMethod]
+        [TestCategory("ChangePin Method"), TestMethod]
         public void ChangePin_InValidCard_InvalidOldPin()
         {
             Card c = new Card(2);
@@ -96,7 +103,7 @@ namespace ATMProjectUnitTesting
             Assert.AreEqual(false, PinchangedStatus);
         }
 
-        [TestMethod]
+        [TestCategory("ChangePin Method"), TestMethod]
         public void ChangePin_ValidCard_InvalidOldPin()
         {
             Card c = new Card(7);

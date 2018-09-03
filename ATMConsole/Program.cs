@@ -14,9 +14,9 @@ namespace ATMConsole
     {
         static void Main(string[] args)
         {
-            ATMProject.Customer Ac = new ATMProject.Customer();
-            CustomerInfo Message = Ac.GetCustomerDetails(25);
-            Console.WriteLine("Customer Info: {0}{1}{2}", Message.CustomerId.ToString(), Message.CustomerName, Message.CustomerAddress);
+            ATMProject.Account Ac = new ATMProject.SavingsAccount(12);
+            double Balance= Ac.Checkbalance();
+            Console.WriteLine(Balance);
             Console.Read();
 
         }
