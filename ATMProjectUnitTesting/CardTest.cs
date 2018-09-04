@@ -39,7 +39,6 @@ namespace ATMProjectUnitTesting
             var ValidCard = c.IsCardValid();
             Assert.AreEqual(false, ValidCard);
         }
-
         [TestCategory("PinValid Method"), TestMethod]
         public void validCard_validPin_Pinvalidate()
         {
@@ -47,7 +46,6 @@ namespace ATMProjectUnitTesting
             var validpin = c.PinValidate(1111);
             Assert.AreEqual(true, validpin);
         }
-
         [TestCategory("PinValid Method"), TestMethod]
         public void ValidCard_InvalidPin_Pinvalidate()
         {
@@ -55,7 +53,6 @@ namespace ATMProjectUnitTesting
             var invalidpin = c.PinValidate(2222222);
             Assert.AreEqual(false, invalidpin);
         }
-
         [TestCategory("PinValid Method"), TestMethod]
         public void InValidCard_InvalidPin_Pinvalidate()
         {
@@ -63,7 +60,6 @@ namespace ATMProjectUnitTesting
             var invalidpin = c.PinValidate(2222222);
             Assert.AreEqual(false, invalidpin);
         }
-
         [TestCategory("Block Method"), TestMethod]
         public void InValidCard_BlockCard()
         {
@@ -78,7 +74,6 @@ namespace ATMProjectUnitTesting
             var cardstatus = c.BlockCard();
             Assert.AreEqual(true, cardstatus);
         }
-
         [TestCategory("ChangePin Method"), TestMethod]
         public void ChangePin_ValidCard_SameOldPinAsNewPin()
         {
@@ -86,7 +81,6 @@ namespace ATMProjectUnitTesting
             var PinchangedStatus = c.ChangePin(2222, 2222);
             Assert.AreEqual(false, PinchangedStatus);
         }
-
         [TestCategory("ChangePin Method"), TestMethod]
         public void ChangePin_ValidCard_validOldPin()
         {
@@ -94,7 +88,6 @@ namespace ATMProjectUnitTesting
             var PinchangedStatus = c.ChangePin(0, 1515);
             Assert.AreEqual(true, PinchangedStatus);
         }
-
         [TestCategory("ChangePin Method"), TestMethod]
         public void ChangePin_InValidCard_InvalidOldPin()
         {
@@ -102,7 +95,6 @@ namespace ATMProjectUnitTesting
             var PinchangedStatus = c.ChangePin(7777, 1234);
             Assert.AreEqual(false, PinchangedStatus);
         }
-
         [TestCategory("ChangePin Method"), TestMethod]
         public void ChangePin_ValidCard_InvalidOldPin()
         {

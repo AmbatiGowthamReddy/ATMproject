@@ -45,9 +45,9 @@ namespace ATMProject
                 throw e;
             }
         }
-        public AccountInfo GetAccountDetails()
+        public AccountInfo Info
         {
-            return Ac;
+            get { return Ac; }
         }
         public double Checkbalance()
         {

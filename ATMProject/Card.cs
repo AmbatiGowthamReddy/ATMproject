@@ -59,7 +59,7 @@ namespace ATMProject
         }
         public bool PinValidate(int PinNumber)
         {
-            if (IsCardValid().Equals(true))
+            if (IsCardValid())
             {
                 if (PinNumber == this._cardPin)
                 {
@@ -71,7 +71,7 @@ namespace ATMProject
         }
         public bool BlockCard()
         {
-            if (IsCardValid().Equals(true))
+            if (IsCardValid())
             {
                 var card = dataModel.Cards.SingleOrDefault(p => p.CardNumber == this._cardNumber);
                 card.CardStatus = "Blocked";
