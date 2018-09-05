@@ -13,7 +13,7 @@ namespace ATMProject
 
         }
 
-        public override void Depositfunds(int depositAmount)
+        public override bool Depositfunds(int depositAmount)
         {
             try
             {
@@ -21,7 +21,9 @@ namespace ATMProject
                 {
                     Ac.CurrentBalance += depositAmount;
                     dataModel.SaveChanges();
+                    return true;
                 }
+                return false;
             }
             catch (Exception e)
             {
@@ -29,7 +31,7 @@ namespace ATMProject
             }
         }
 
-        public override void Withdrawfunds(int withdrawamount)
+        public override bool Withdrawfunds(int withdrawamount)
         {
             try
             {
@@ -38,7 +40,9 @@ namespace ATMProject
                 {
                     Ac.CurrentBalance -= withdrawamount;
                     dataModel.SaveChanges();
+                    return true;
                 }
+                return false;
             }
             catch (Exception e)
             {
@@ -46,16 +50,22 @@ namespace ATMProject
             }
         }
 
-        public override void TransferFunds(int targetAccountNumber, int TAmount)
+        public override bool TransferFunds(int targetAccountNumber, int TAmount)
         {
             try
             {
-                if (TAmount > 0 && TAmount <= Ac.CurrentBalance)
+                var TAccountNumber = dataModel.Accounts.SingleOrDefault(p=>p.AccountNumber==targetAccountNumber);
+                if (TAccountNumber!=null)
                 {
-                    Ac.CurrentBalance -= TAmount;
-                    dataModel.SaveChanges();
+                    if (TAmount > 0 && TAmount <= Ac.CurrentBalance)
+                    {
+                        Ac.CurrentBalance -= TAmount;
+                        dataModel.SaveChanges();
+                        return true;
+                    }
                 }
-
+                
+                return false;
             }
             catch (Exception e) { throw e; }
         }

@@ -70,7 +70,7 @@ namespace ATMProjectUnitTesting
         [TestCategory("Block Method"), TestMethod]
         public void ValidCard_BlockCard()
         {
-            Card c = new Card(7);
+            Card c = new Card(19);
             var cardstatus = c.BlockCard();
             Assert.AreEqual(true, cardstatus);
         }
@@ -85,7 +85,7 @@ namespace ATMProjectUnitTesting
         public void ChangePin_ValidCard_validOldPin()
         {
             Card c = new Card(15);
-            var PinchangedStatus = c.ChangePin(0, 1515);
+            var PinchangedStatus = c.ChangePin(1515, 0);
             Assert.AreEqual(true, PinchangedStatus);
         }
         [TestCategory("ChangePin Method"), TestMethod]

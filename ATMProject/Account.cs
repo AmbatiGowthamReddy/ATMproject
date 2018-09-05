@@ -53,8 +53,8 @@ namespace ATMProject
         {
             return Ac.CurrentBalance;
         }
-        public abstract void Depositfunds(int amount);
-        public abstract void Withdrawfunds(int amount);
-        public abstract void TransferFunds(int targetAccountNumber, int amount);
+        public abstract bool Depositfunds(int amount);
+        public abstract bool Withdrawfunds(int amount);
+        public abstract bool TransferFunds(int targetAccountNumber, int amount);
     }
 }

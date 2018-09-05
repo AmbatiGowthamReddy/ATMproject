@@ -13,17 +13,17 @@ namespace ATMProject
 
         }
 
-        public override void Depositfunds(int amount)
+        public override bool Depositfunds(int amount)
         {
             throw new NotImplementedException();
         }
 
-        public override void TransferFunds(int targetAccountNumber, int TAmount)
+        public override bool TransferFunds(int targetAccountNumber, int TAmount)
         {
             throw new NotImplementedException();
         }
     
-        public override void Withdrawfunds(int amount)
+        public override bool Withdrawfunds(int amount)
         {
 
             throw new NotImplementedException();
