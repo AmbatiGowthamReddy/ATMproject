@@ -13,12 +13,14 @@ namespace ATMProject
     {
         protected AccountInfo Ac;
         protected ATMDataModel dataModel;
+       
+
         public Account(int cardNumber)
         {
             dataModel = new ATMDataModel();
             PopulateAccountData(cardNumber);
         }
-        private void PopulateAccountData(int cardNumber)
+        public void PopulateAccountData(int cardNumber)
         {
 
             try
@@ -28,7 +30,7 @@ namespace ATMProject
                 if (cardData != null)
                 {
                     Ac.CustomerId = cardData.CustomerId;
-                    var accData = dataModel.Accounts.SingleOrDefault(p => p.CustomerId == Ac.CustomerId);
+                      var  accData = dataModel.Accounts.SingleOrDefault(p => p.CustomerId == Ac.CustomerId);
                     if (accData != null)
                     {
                         Ac.AccountNumber = accData.AccountNumber;

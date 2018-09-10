@@ -77,18 +77,16 @@ namespace ATMProjectUnitTesting
         public void Transferfunds_correctAccountNumberandAmountGreaterThanCurrentBalance()
         {
             Account acc = new SavingsAccount(7);
-            //var CurBal = Convert.ToInt32(acc.Checkbalance());
             var CurBal = acc.Checkbalance();
             var accstatus = acc.TransferFunds(2, 200);
-            //var withdrawstatus = acc.Withdrawfunds(CurBal);
             Assert.AreEqual(false, accstatus);
         }
         [TestCategory("Transferfunds"), TestMethod]
         public void Transferfunds_correctAccountNumberandAmountLessThanCurrentBalance()
         {
-            Account acc = new SavingsAccount(7);
+            Account acc = new SavingsAccount(11);
             var CurBal = acc.Checkbalance();
-            var accstatus = acc.TransferFunds(2, 100);
+            var accstatus = acc.TransferFunds(11, 900);
             Assert.AreEqual(true, accstatus);
         }
         [TestCategory("Transferfunds"), TestMethod]

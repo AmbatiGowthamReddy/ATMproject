@@ -15,11 +15,14 @@ namespace ATMProject
 
         public override bool Depositfunds(int depositAmount)
         {
+            
             try
             {
-                if (depositAmount > 0)
+                    var accnbr = dataModel.Accounts.SingleOrDefault(p => p.AccountNumber == Ac.AccountNumber);
+                    if (depositAmount > 0)
                 {
                     Ac.CurrentBalance += depositAmount;
+                    accnbr.Balance += depositAmount;
                     dataModel.SaveChanges();
                     return true;
                 }
@@ -35,10 +38,11 @@ namespace ATMProject
         {
             try
             {
-
+                var accnbr = dataModel.Accounts.SingleOrDefault(p => p.AccountNumber == Ac.AccountNumber);
                 if (withdrawamount > 0 && withdrawamount <= Ac.CurrentBalance)
                 {
                     Ac.CurrentBalance -= withdrawamount;
+                    accnbr.Balance -= withdrawamount;
                     dataModel.SaveChanges();
                     return true;
                 }
@@ -54,12 +58,13 @@ namespace ATMProject
         {
             try
             {
-                var TAccountNumber = dataModel.Accounts.SingleOrDefault(p=>p.AccountNumber==targetAccountNumber);
-                if (TAccountNumber!=null)
+                var TAccountdata = dataModel.Accounts.SingleOrDefault(p=>p.AccountNumber==targetAccountNumber);
+                if (TAccountdata != null)
                 {
                     if (TAmount > 0 && TAmount <= Ac.CurrentBalance)
                     {
                         Ac.CurrentBalance -= TAmount;
+                        TAccountdata.Balance -= TAmount;
                         dataModel.SaveChanges();
                         return true;
                     }
