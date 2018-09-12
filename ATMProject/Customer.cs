@@ -1,4 +1,5 @@
 ﻿using ATMDataAccess;
+using ATMDataAccess.Repositories;
 using ATMProject.Models;
 using System;
 using System.Collections.Generic;
@@ -12,18 +13,24 @@ namespace ATMProject
     public class Customer
     {
         CustomerInfo c;
-        private ATMDataModel dataModel;
+        ICustomerRepository _customerRepository;
+        ICardRepository _cardRepository;
+
+        public Customer()
+        {
+            _cardRepository = new CardRepository();
+            _customerRepository = new CustomerRepository();
+        }
         public CustomerInfo GetCustomerDetails(int cardNumber)
         {
             try
             {
-                dataModel = new ATMDataModel();
-                var cardData = dataModel.Cards.SingleOrDefault(p => p.CardNumber == cardNumber);
+                var cardData = _cardRepository.ReadCardInfo(cardNumber);
                 if (cardData != null)
                 {
                     c = new CustomerInfo();
                     c.CustomerId = cardData.CustomerId;
-                    var custData = dataModel.Customers.SingleOrDefault(p => p.CustomerId == c.CustomerId);
+                    var custData = _customerRepository.ReadCustomerInfo(c.CustomerId);
                     if (custData != null)
                     {
                         c.CustomerName = custData.CustomerName;

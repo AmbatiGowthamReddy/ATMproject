@@ -1,4 +1,5 @@
 ﻿using ATMDataAccess;
+using ATMDataAccess.Repositories;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -15,20 +16,21 @@ namespace ATMProject
         private string _cardStatus { get; set; }
         private string _status { get; set; }
 
-       
-        private ATMDataModel dataModel;
+        ICardRepository _cardRepository;
+        //private ATMDataModel dataModel;
 
         public Card(int cardNumber)
         {
-         
+            _cardRepository = new CardRepository();
             PouplateData(cardNumber);
         }
 
         private void PouplateData(int cardNumber)
         {
           
-            dataModel = new ATMDataModel();
-            var card = dataModel.Cards.SingleOrDefault(p => p.CardNumber == cardNumber);
+            //dataModel = new ATMDataModel();
+            //var card = dataModel.Cards.SingleOrDefault(p => p.CardNumber == cardNumber);
+            var card = _cardRepository.ReadCardInfo(cardNumber);
             try
             {
                 if (card != null)
@@ -73,9 +75,9 @@ namespace ATMProject
         {
             if (IsCardValid())
             {
-                var card = dataModel.Cards.SingleOrDefault(p => p.CardNumber == this._cardNumber);
+                var card = _cardRepository.ReadCardInfo(_cardNumber);
                 card.CardStatus = "Blocked";
-                dataModel.SaveChanges();
+               _cardRepository.SaveChanges();
                 return true;
             }
             return false;
@@ -86,10 +88,10 @@ namespace ATMProject
             {
                 if (IsCardValid() && this._cardPin == OldPin)
                 {
-                    var card = dataModel.Cards.SingleOrDefault(p => p.CardNumber == this._cardNumber);
+                    var card = _cardRepository.ReadCardInfo(_cardNumber);
                     this._cardPin = NewPin;
                     card.CardPin = NewPin;
-                    dataModel.SaveChanges();
+                    _cardRepository.SaveChanges();
                     return true;
                 }
             }

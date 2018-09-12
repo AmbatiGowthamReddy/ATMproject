@@ -6,31 +6,34 @@ using System.Threading.Tasks;
 using System.Configuration;
 using ATMDataAccess;
 using ATMProject.Models;
+using ATMDataAccess.Repositories;
 
 namespace ATMProject
 {
     public abstract class Account
     {
         protected AccountInfo Ac;
-        protected ATMDataModel dataModel;
+        protected IAccountRepository _AccountRepository;
+        protected ICardRepository _cardRepository;
+        
        
 
         public Account(int cardNumber)
         {
-            dataModel = new ATMDataModel();
+            _AccountRepository = new AccountRepository();
+            _cardRepository = new CardRepository();
             PopulateAccountData(cardNumber);
         }
         public void PopulateAccountData(int cardNumber)
         {
-
             try
             {
                 Ac = new AccountInfo();
-                var cardData = dataModel.Cards.SingleOrDefault(p => p.CardNumber == cardNumber);
+                var cardData = _cardRepository.ReadCardInfo(cardNumber);
                 if (cardData != null)
                 {
                     Ac.CustomerId = cardData.CustomerId;
-                      var  accData = dataModel.Accounts.SingleOrDefault(p => p.CustomerId == Ac.CustomerId);
+                    var accData = _AccountRepository.ReadAccountInfoThroughCustomerID(Ac.CustomerId);
                     if (accData != null)
                     {
                         Ac.AccountNumber = accData.AccountNumber;

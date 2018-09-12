@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ATMDataAccess.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,12 +19,12 @@ namespace ATMProject
             
             try
             {
-                    var accnbr = dataModel.Accounts.SingleOrDefault(p => p.AccountNumber == Ac.AccountNumber);
-                    if (depositAmount > 0)
+                var TAccountdata = _AccountRepository.AccountDataInfoThroughAccountNumber(Ac.AccountNumber);
+                if (depositAmount > 0)
                 {
                     Ac.CurrentBalance += depositAmount;
-                    accnbr.Balance += depositAmount;
-                    dataModel.SaveChanges();
+                    TAccountdata.Balance += depositAmount;
+                    _AccountRepository.SaveChanges();
                     return true;
                 }
                 return false;
@@ -38,12 +39,12 @@ namespace ATMProject
         {
             try
             {
-                var accnbr = dataModel.Accounts.SingleOrDefault(p => p.AccountNumber == Ac.AccountNumber);
+                var TAccountdata = _AccountRepository.AccountDataInfoThroughAccountNumber(Ac.AccountNumber);
                 if (withdrawamount > 0 && withdrawamount <= Ac.CurrentBalance)
                 {
                     Ac.CurrentBalance -= withdrawamount;
-                    accnbr.Balance -= withdrawamount;
-                    dataModel.SaveChanges();
+                    TAccountdata.Balance -= withdrawamount;
+                    _AccountRepository.SaveChanges();
                     return true;
                 }
                 return false;
@@ -58,14 +59,14 @@ namespace ATMProject
         {
             try
             {
-                var TAccountdata = dataModel.Accounts.SingleOrDefault(p=>p.AccountNumber==targetAccountNumber);
+                var TAccountdata = _AccountRepository.AccountDataInfoThroughAccountNumber(targetAccountNumber);
                 if (TAccountdata != null)
                 {
                     if (TAmount > 0 && TAmount <= Ac.CurrentBalance)
                     {
                         Ac.CurrentBalance -= TAmount;
                         TAccountdata.Balance -= TAmount;
-                        dataModel.SaveChanges();
+                        _AccountRepository.SaveChanges();
                         return true;
                     }
                 }
